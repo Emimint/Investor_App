@@ -6,16 +6,24 @@ import Results from "./components/Results/Results";
 
 function App() {
   const [currentResults, setResults] = useState([]);
+  const [isVisible, setVisibility] = useState(false);
 
   const showResultHandler = (results) => {
     setResults(results);
+    setVisibility(true);
   };
 
   return (
     <div>
       <Header logo={logo} />
-      <InputForm onCreateResult={showResultHandler} />
-      <Results data={currentResults} />
+      <InputForm
+        onCreateResult={showResultHandler}
+        onResetView={() => {
+          setVisibility(false);
+          console.log(isVisible);
+        }}
+      />
+      {isVisible ? <Results data={currentResults} /> : <p>Nothing to show.</p>}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./InputForm.module.css";
 import InputCard from "../UI/InputCard";
 
-const InputForm = ({ onCreateResult }) => {
+const InputForm = ({ onCreateResult, onResetView }) => {
   const initialInput = {
     currentSavings: "",
     yearlyContribution: "",
@@ -51,8 +51,12 @@ const InputForm = ({ onCreateResult }) => {
         totalYearlyInterest: totalYearlyInterest + yearlyInterest,
       });
     }
-    inputChangeHandler(); // to reset all values to default
     onCreateResult(yearlyData);
+  };
+
+  const toggleView = () => {
+    inputChangeHandler(); // to reset all values to default
+    onResetView(); // set Results component visibility to false
   };
 
   return (
@@ -67,6 +71,9 @@ const InputForm = ({ onCreateResult }) => {
           <label htmlFor="current-savings">Current Savings ($)</label>
           <input
             type="number"
+            min="0.01"
+            step="0.01"
+            value={userInput.currentSavings}
             id="current-savings"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
@@ -77,6 +84,9 @@ const InputForm = ({ onCreateResult }) => {
           <label htmlFor="yearly-contribution">Yearly Savings ($)</label>
           <input
             type="number"
+            min="1"
+            step="0.01"
+            value={userInput.yearlyContribution}
             id="yearly-contribution"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
@@ -91,6 +101,9 @@ const InputForm = ({ onCreateResult }) => {
           </label>
           <input
             type="number"
+            min="0.01"
+            step="0.01"
+            value={userInput.expectedReturn}
             id="expected-return"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
@@ -101,6 +114,9 @@ const InputForm = ({ onCreateResult }) => {
           <label htmlFor="duration">Investment Duration (years)</label>
           <input
             type="number"
+            min="1"
+            step="1"
+            value={userInput.duration}
             id="duration"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
@@ -109,7 +125,7 @@ const InputForm = ({ onCreateResult }) => {
         </p>
       </InputCard>
       <p className={styles.action}>
-        <button type="reset" className={styles["buttonAlt"]}>
+        <button onClick={toggleView} className={styles["buttonAlt"]}>
           Reset
         </button>
         <button type="submit" className={styles["button"]}>
