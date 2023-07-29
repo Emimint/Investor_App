@@ -60,12 +60,7 @@ const InputForm = ({ onCreateResult, onResetView }) => {
   };
 
   return (
-    <form
-      className={styles.form}
-      onSubmit={(e) => {
-        calculateHandler(e);
-      }}
-    >
+    <form className={styles.form} onSubmit={calculateHandler}>
       <InputCard>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
