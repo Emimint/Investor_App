@@ -120,7 +120,13 @@ const InputForm = ({ onCreateResult, onResetView }) => {
         </p>
       </InputCard>
       <p className={styles.action}>
-        <button onClick={toggleView} className={styles["buttonAlt"]}>
+        <button
+          onClick={() => {
+            onResetView(false);
+          }}
+          type="reset"
+          className={styles["buttonAlt"]}
+        >
           Reset
         </button>
         <button type="submit" className={styles["button"]}>

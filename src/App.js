@@ -18,10 +18,7 @@ function App() {
       <Header logo={logo} />
       <InputForm
         onCreateResult={showResultHandler}
-        onResetView={() => {
-          setVisibility(false);
-          console.log(isVisible);
-        }}
+        onResetView={setVisibility}
       />
       {isVisible ? <Results data={currentResults} /> : <p>Nothing to show.</p>}
     </div>
