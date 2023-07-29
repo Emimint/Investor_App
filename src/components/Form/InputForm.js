@@ -45,11 +45,6 @@ const InputForm = ({ onCreateResult, onResetView }) => {
     onCreateResult(yearlyData);
   };
 
-  const toggleView = () => {
-    inputChangeHandler(); // to reset all values to default
-    onResetView(); // set Results component visibility to false
-  };
-
   return (
     <form className={styles.form} onSubmit={calculateHandler}>
       <InputCard>
