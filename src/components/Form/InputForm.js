@@ -4,26 +4,17 @@ import InputCard from "../UI/InputCard";
 
 const InputForm = ({ onCreateResult, onResetView }) => {
   const initialInput = {
-    currentSavings: "",
-    yearlyContribution: "",
-    expectedReturn: "",
-    duration: "",
+    "current-savings": "",
+    "yearly-contribution": "",
+    "expected-return": "",
+    "duration": "",
   };
 
   const [userInput, setUserInput] = useState(initialInput);
 
   const inputChangeHandler = (id, value) => {
     setUserInput((previousState) => {
-      if (id === "current-savings") {
-        return { ...previousState, currentSavings: +value };
-      } else if (id === "yearly-contribution") {
-        return { ...previousState, yearlyContribution: +value };
-      } else if (id === "expected-return") {
-        return { ...previousState, expectedReturn: +value };
-      } else if (id === "duration") {
-        return { ...previousState, duration: +value };
-      }
-      return initialInput;
+      return { ...previousState, [id]: value };
     });
   };
 
@@ -32,10 +23,10 @@ const InputForm = ({ onCreateResult, onResetView }) => {
 
     const yearlyData = []; // per-year results
 
-    let currentSavings = +userInput.currentSavings;
-    const yearlyContribution = +userInput.yearlyContribution;
-    const expectedReturn = +userInput.expectedReturn / 100;
-    const duration = +userInput.duration;
+    let currentSavings = +userInput["current-savings"];
+    const yearlyContribution = +userInput["yearly-contribution"];
+    const expectedReturn = +userInput["expected-return"] / 100;
+    const duration = +userInput["duration"];
     const totalYearlyInterest = 0;
 
     // The below code calculates yearly results (total savings, interest etc)
@@ -123,6 +114,7 @@ const InputForm = ({ onCreateResult, onResetView }) => {
         <button
           onClick={() => {
             onResetView(false);
+            setUserInput(initialInput);
           }}
           type="reset"
           className={styles["buttonAlt"]}
