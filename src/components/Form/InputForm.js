@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styles from "./InputForm.module.css";
 import InputCard from "../UI/InputCard";
 
-const InputForm = () => {
-
+const InputForm = ({ onCreateResult }) => {
   const initialInput = {
     currentSavings: "",
     yearlyContribution: "",
@@ -14,7 +13,7 @@ const InputForm = () => {
   const [userInput, setUserInput] = useState(initialInput);
 
   const inputChangeHandler = (id, value) => {
-    setUserInput( ( previousState ) => {
+    setUserInput((previousState) => {
       if (id === "current-savings") {
         return { ...previousState, currentSavings: +value };
       } else if (id === "yearly-contribution") {
@@ -25,32 +24,35 @@ const InputForm = () => {
         return { ...previousState, duration: +value };
       }
       return initialInput;
-    } );
+    });
   };
-  
+
   const calculateHandler = (e) => {
     e.preventDefault();
 
     const yearlyData = []; // per-year results
-    
-    let currentSavings = +userInput.currentSavings; 
+
+    let currentSavings = +userInput.currentSavings;
     const yearlyContribution = +userInput.yearlyContribution;
     const expectedReturn = +userInput.expectedReturn / 100;
     const duration = +userInput.duration;
-    
+    const totalYearlyInterest = 0;
+
     // The below code calculates yearly results (total savings, interest etc)
-    for ( let i = 0; i < duration; i++ ) {
+    for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
       yearlyData.push({
-        year: (new Date()).getFullYear() + 1,
+        key: Math.random(),
+        year: new Date().getFullYear() + i,
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
         yearlyContribution: yearlyContribution,
+        totalYearlyInterest: totalYearlyInterest + yearlyInterest,
       });
     }
-console.log(yearlyData);
-return yearlyData;
+    inputChangeHandler(); // to reset all values to default
+    onCreateResult(yearlyData);
   };
 
   return (

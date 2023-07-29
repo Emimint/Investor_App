@@ -1,10 +1,15 @@
+import React, { useState } from "react";
 import styles from "./Results.module.css";
 
 const Results = (props) => {
-    {/* Todo: Show below table conditionally (only once result data is available) */}
-{/* Show fallback text if no data is available */}
+  {
+    /* Todo: Show below table conditionally (only once result data is available) */
+  }
+  {
+    /* Show fallback text if no data is available */
+  }
 
-    return (
+  return (
     <table className={styles.result}>
       <thead>
         <tr>
@@ -16,13 +21,17 @@ const Results = (props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>YEAR NUMBER - year</td>
-          <td>TOTAL SAVINGS END OF YEAR - savingsEndOfYear</td>
-          <td>INTEREST GAINED IN YEAR - yearlyInterest</td>
-          <td>TOTAL INTEREST GAINED - sum of yearlyInterest</td>
-          <td>TOTAL INVESTED CAPITAL - savingsEndOfYear + yearlyInterest</td>
-        </tr>
+        {props.data.map((yearInfo) => (
+          <tr key={yearInfo.key}>
+            <td>{yearInfo.year.toFixed(2)}</td>
+            <td>{yearInfo.savingsEndOfYear.toFixed(2)}</td>
+            <td>{yearInfo.yearlyInterest.toFixed(2)}</td>
+            <td>{yearInfo.totalYearlyInterest.toFixed(2)}</td>
+            <td>
+              {(yearInfo.savingsEndOfYear + yearInfo.yearlyInterest).toFixed(2)}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
