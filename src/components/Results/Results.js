@@ -23,13 +23,11 @@ const Results = (props) => {
       <tbody>
         {props.data.map((yearInfo) => (
           <tr key={yearInfo.key}>
-            <td>{yearInfo.year}</td>
-            <td>{yearInfo.savingsEndOfYear.toFixed(2)}</td>
-            <td>{yearInfo.yearlyInterest.toFixed(2)}</td>
-            <td>{yearInfo.totalYearlyInterest.toFixed(2)}</td>
-            <td>
-              {(yearInfo.savingsEndOfYear + yearInfo.yearlyInterest).toFixed(2)}
-            </td>
+            <td>${yearInfo.year}</td>
+            <td>${yearInfo.savingsEndOfYear.toFixed(2)}</td>
+            <td>${yearInfo.yearlyInterest.toFixed(2)}</td>
+            <td>${yearInfo.totalYearlyInterest.toFixed(2)}</td>
+            <td>${yearInfo.investedCapital}</td>
           </tr>
         ))}
       </tbody>

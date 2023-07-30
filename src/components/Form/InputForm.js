@@ -4,10 +4,10 @@ import InputCard from "../UI/InputCard";
 
 const InputForm = ({ onCreateResult, onResetView }) => {
   const initialInput = {
-    "current-savings": "",
-    "yearly-contribution": "",
-    "expected-return": "",
-    "duration": "",
+    "current-savings": "10000",
+    "yearly-contribution": "1200",
+    "expected-return": "7",
+    duration: "10",
   };
 
   const [userInput, setUserInput] = useState(initialInput);
@@ -24,10 +24,10 @@ const InputForm = ({ onCreateResult, onResetView }) => {
     const yearlyData = []; // per-year results
 
     let currentSavings = +userInput["current-savings"];
+    const initialInvestment = currentSavings;
     const yearlyContribution = +userInput["yearly-contribution"];
     const expectedReturn = +userInput["expected-return"] / 100;
     const duration = +userInput["duration"];
-    const totalYearlyInterest = 0;
 
     // The below code calculates yearly results (total savings, interest etc)
     for (let i = 0; i < duration; i++) {
@@ -39,7 +39,9 @@ const InputForm = ({ onCreateResult, onResetView }) => {
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
         yearlyContribution: yearlyContribution,
-        totalYearlyInterest: totalYearlyInterest + yearlyInterest,
+        totalYearlyInterest:
+          currentSavings - initialInvestment - yearlyContribution * (i + 1),
+        investedCapital: initialInvestment + yearlyContribution * (i + 1),
       });
     }
     onCreateResult(yearlyData);
@@ -54,7 +56,7 @@ const InputForm = ({ onCreateResult, onResetView }) => {
             type="number"
             min="0.01"
             step="0.01"
-            value={userInput.currentSavings}
+            value={userInput["current-savings"]}
             id="current-savings"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
@@ -67,7 +69,7 @@ const InputForm = ({ onCreateResult, onResetView }) => {
             type="number"
             min="1"
             step="0.01"
-            value={userInput.yearlyContribution}
+            value={userInput["yearly-contribution"]}
             id="yearly-contribution"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
@@ -84,7 +86,7 @@ const InputForm = ({ onCreateResult, onResetView }) => {
             type="number"
             min="0.01"
             step="0.01"
-            value={userInput.expectedReturn}
+            value={userInput["expected-return"]}
             id="expected-return"
             onChange={(e) => {
               inputChangeHandler(e.target.id, e.target.value);
